@@ -1,0 +1,89 @@
+
+
+{% block contenido %}
+
+
+<link href="https://cdn.rawgit.com/mdehoog/Semantic-UI-Calendar/76959c6f7d33a527b49be76789e984a0a407350b/dist/calendar.min.css" rel="stylesheet" type="text/css" />
+<script src="https://cdn.rawgit.com/mdehoog/Semantic-UI-Calendar/76959c6f7d33a527b49be76789e984a0a407350b/dist/calendar.min.js"></script>
+
+
+
+<h1>{{ asunto|default:"Editar" }} Venta {{ orden.codigo }}</h1>
+
+<div class="ui text container">
+
+    <form method="POST">
+      {% csrf_token %}
+            {{ form.as_p }}
+
+      <button class="positive ui button" type="submit">Guardar</button>
+      
+    </form>
+
+    </div>
+
+{% endblock %}
+
+
+{% block javascript %}
+<script type="text/javascript">
+
+    $('#fecha_orden').calendar({
+      type: 'date',
+      text: {
+        months: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+        monthsShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+        today: 'Hoy',
+        now: 'Ahora',
+        am: 'AM',
+        pm: 'PM'
+      },
+      ampm: false,
+      formatter: {
+        date: function (date, settings) {
+            if (!date) return '';
+            var day = date.getDate() + '';
+            if (day.length < 2) {
+                day = '0' + day;
+            }
+            var month = (date.getMonth() + 1) + '';
+            if (month.length < 2) {
+                month = '0' + month;
+            }
+            var year = date.getFullYear();
+            return year + '-' + month + '-' + day;
+        }
+      },
+
+    });
+
+    var parent_elements = [
+                            {% for c in proveedor %} 
+                                {
+                                  id:   {{c.id}}, 
+                                  text:"{{c}}"}, 
+                            {% endfor %}
+                          ];
+    var child_elements = [
+                            {% for s in subcategorias %} 
+                                {
+                                  id:         {{s.id}}, 
+                                  parentID:   {{s.categoria.id}}, 
+                                  text:      "{{s}}"}, 
+                            {% endfor %}
+                        ];
+
+    $(document).ready(function() {
+        // Objetos de configuración inicial de select2 para selects dependientes
+        var configParent = {
+            data: parent_elements
+        };
+        var configChild = {
+            data: child_elements,
+            width: '100%'
+        };
+        initSelects("#id_proveedor", "#id_subcategoria", configParent, configChild);
+    });
+
+</script>
+{% endblock javascript %}

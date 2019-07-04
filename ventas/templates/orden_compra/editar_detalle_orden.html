@@ -1,0 +1,113 @@
+
+
+{% block contenido %}
+
+<h1>{{ asunto|default:"Editar" }} Detalle de Orden No. {{ orden.codigo }}</h1>
+<div class="ui text container">
+  <form class="ui form" method="POST">
+
+    {% csrf_token %}
+
+      <h4 class="ui dividing header">{{ detalle_orden.producto }}</h4>
+
+      {% if not detalle_orden.producto %}
+      <div class="fields">
+        <div class="eight wide field">
+          <label>Producto</label>
+          {{ form.producto.errors }}
+          {{ form.producto }}
+        </div>
+
+      </div>
+      {% endif %}
+
+    <div class="fields">
+      <div class="eight wide field">
+        <label>Cantidad</label>
+        {{ form.cantidad.errors }}
+        {{ form.cantidad }}
+      </div>
+      <div class="eight wide field">
+        <label>Precio</label>
+        {{ form.precio.errors }}
+        {{ form.precio }}
+      </div>
+
+      <div class="eight wide field">
+        <label>Total</label>
+        {{ form.total.errors }}
+        {{ form.total }}
+      </div>
+      <div class="eight wide field">
+        <label>Observaciones</label>
+        {{ form.observaciones.errors }}
+        {{ form.observaciones }}
+      </div>
+
+    </div>
+
+      <div class="fields">
+        
+        
+      </div>
+
+
+      <div class="field">
+        <div class="field">
+          <label>Observaciones</label>
+          {{ form.observaciones.errors }}
+          {{ form.observaciones }}
+        </div>
+      </div>
+
+    <button class="positive ui button" type="submit">Guardar</button>
+
+
+    
+
+
+  </form>
+
+
+
+  </div>
+{% endblock %}
+
+
+{% block javascript %}
+<script type="text/javascript">
+    var parent_elements = [{% for c in producto %} {id:{{c.id}}, text:"{{c}}"}, {% endfor %}];
+    var child_elements = [{% for s in subcategorias %} {id:{{s.id}}, parentID:{{s.categoria.id}}, text:"{{s}}"}, {% endfor %}];
+
+    $(document).ready(function() {
+        // Objetos de configuración inicial de select2 para selects dependientes
+        var configParent = {
+            data: parent_elements,
+            width: '100%'
+        };
+        var configChild = {
+            data: child_elements,
+            width: '100%'
+        };
+        initSelects("#id_producto", "#id_subcategoria", configParent, configChild);
+    });
+
+
+    var parent_elements = [{% for c in medida %} {id:{{c.id}}, text:"{{c}}"}, {% endfor %}];
+    var child_elements = [{% for s in subcategorias %} {id:{{s.id}}, parentID:{{s.categoria.id}}, text:"{{s}}"}, {% endfor %}];
+
+    $(document).ready(function() {
+        // Objetos de configuración inicial de select2 para selects dependientes
+        var configParent = {
+            data: parent_elements,
+            width: '100%'
+        };
+        var configChild = {
+            data: child_elements,
+            width: '100%'
+        };
+        initSelects("#id_medida", "#id_subcategoria", configParent, configChild);
+    });
+
+</script>
+{% endblock javascript %}

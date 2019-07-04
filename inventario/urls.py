@@ -7,7 +7,7 @@ from . import views
 from django.urls import path, include
 
 
-app_name = 'compras'
+app_name = 'inventario'
 
 urlpatterns = [
     path('lista/', views.lista_productos, name="lista-productos"),

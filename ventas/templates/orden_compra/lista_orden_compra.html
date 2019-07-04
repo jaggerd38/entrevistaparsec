@@ -1,0 +1,49 @@
+
+{% block contenido %}
+<h1>Ordenes de Compra</h1>
+<div class="ui text container">
+
+
+  <div class="ui divided link items">
+     
+  </div>
+
+  <form class="ui form" method="GET">
+    <div class="field">
+      <input type="text" name="texto" placeholder="Código de la Orden">
+    </div>
+    <button class="blue ui button" type="submit" name="buscar" value="Buscar">Buscar</button>
+  </form>
+
+
+  {% if ordenescompra %}
+  <table class="ui striped table">
+    <thead>
+      <tr>
+          <th>Código</th>
+          <th>Fecha</th>
+          <th>Proveedor</th>
+          <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for ordencompra in ordenescompra %}
+      <tr>
+          <td>{{ordencompra.codigo}}</td>
+          <td>{{ ordencompra.fecha|date:'N d, Y' }}</td>
+          <td>{{ ordencompra.proveedor }}</td>
+          <td>
+            
+          </td>
+
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% endif %}
+
+
+
+  </div>
+
+{% endblock %}

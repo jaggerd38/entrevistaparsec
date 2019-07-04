@@ -1,0 +1,28 @@
+{% extends 'inicio/base.html' %}
+
+{% block contenido %}
+
+<h1>{{ asunto|default:"Editar" }} Observaciones de {{ nombre|default:"Compra" }} No. {{ objeto.codigo }}</h1>
+<div class="ui text container">
+
+  <h3>{{ Observaciones }}</h3>
+
+
+  <form class="ui form" method="POST">
+    {% csrf_token %}
+      <h4 class="ui dividing header">Observaciones</h4>
+
+      <div class="field">
+        <div class="field">
+          {{ form.observaciones.errors }}
+          {{ form.observaciones }}
+        </div>
+      </div>
+
+    <button class="positive ui button" type="submit">Guardar</button>
+    <a href="{% url 'compras:lista-compras' %}" class="blue item" data-vivaldi-spatnav-clickable="1">Regresar</a>
+  </form>
+
+
+    </div>
+{% endblock %}

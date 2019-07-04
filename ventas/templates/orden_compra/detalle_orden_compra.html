@@ -1,0 +1,133 @@
+
+
+
+{% block contenido %}
+
+<h1>Orden de Compra No. {{orden.codigo}}</h1>
+<div class="ui text container">
+
+  <div class="ui divided link items">
+     
+  </div>
+
+  <div class="actions">
+    <tr>
+      <th></th>
+      <th colspan="4">
+        {% if detalles|length != 0 %}
+          {% if orden.anulada == False and orden.finalizada != True %}
+            <div class="ui right floated approve green button finalizar_anular" id="ordenFinalizarBtn" data-value="finalizar">
+              Finalizar
+            </div>
+          {% endif %}
+          {% if orden.finalizada == False and orden.anulada != True %}
+            <div class="ui right floated approve orange button finalizar_anular" id="ordenAnularBtn" data-value="anular">
+              Anular
+            </div>
+          {% endif %}
+        {% endif %}
+      </th>
+    </tr>
+  </div>
+
+  <h3>Encabezado</h3>
+  <table class="ui teal table">
+    <thead>
+      <tr>
+          <th>Código</th>
+          <th>Cliente</th>
+          <th>Fecha</th>
+          
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+          <td>{{ orden.no_venta }}</td>
+          <td>{{ orden.nombre_cliente }}</td>
+          <td>{{ orden.fecha }}</td>
+          
+          
+          
+      </tr>
+    </tbody>
+  </table>
+
+  agregar detalle
+  <a href="{% url 'ventas:nuevo-detalle-venta' pk=orden.no_venta%}" class="blue item" data-vivaldi-spatnav-clickable="1">agregar</a>
+
+
+  <div class="actions">
+    <tr>
+      <th></th>
+      <th colspan="4">
+        {% if orden.anulada == False and orden.finalizada == False %}
+          <div class="ui link">
+            <td>
+              
+                Nuevo Detalle
+              </a>
+            </td>
+          </div>
+        {% endif %}
+      </th>
+    </tr>
+  </div>
+  {% if detalles %}
+
+  <h3>Detalles</h3>
+
+  <table class="ui striped table">
+    <thead>
+      <tr>
+          <th>Codigo</th>
+          <th>cliente</th>
+          <th>fecha</th>
+          <th>Descuento</th>
+          <th>Subtotal</th>
+          <th>Obs</th>
+          <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      {% for detalle in detalles %}
+
+        <tr>
+            <td>{{ detalle.cantidad|floatformat:2 }}</td>
+            <td>{{ detalle.producto }}</td>
+            <td>{{ detalle.costo }}</td>
+            <td>{{ detalle.descuento }}</td>
+            <td>{{ detalle.subtotal }}</td>
+            <td>
+            
+
+            </td>
+
+            <td>
+              
+            </td>
+        </tr>
+
+
+
+
+
+      {% endfor %}
+
+
+
+      
+
+
+    </tbody>
+  </table>
+  {% endif %}
+
+
+  <div class="ui divided link items">
+     
+  </div>
+
+
+  </div>
+{% endblock %}
