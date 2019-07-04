@@ -111,3 +111,5 @@ virtualenv/
 .vagrant/
 acceptance_config.yml
 boxes
+.vscode/
+db.sqlite3
