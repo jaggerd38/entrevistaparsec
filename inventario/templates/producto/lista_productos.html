@@ -1,0 +1,46 @@
+
+
+{% block contenido %}
+<h1>Productos</h1>
+<div class="ui text container">
+
+
+  <div class="ui divided link items">
+     
+  </div>
+
+  <form class="ui form" method="GET">
+    <div class="field">
+      <input type="text" name="texto" placeholder="Nombre del Proveedor">
+    </div>
+    <button class="ui button" type="submit" name="buscar" value="Buscar">Buscar</button>
+  </form>
+
+
+  {% if productos %}
+  <table class="ui striped table">
+    <thead>
+      <tr>
+          <th>Nit</th>
+          <th>Codigo</th>
+          <th>Nombre</th>
+          <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for producto in productos %}
+      <tr>
+          <td>{{producto.nit}}</td>
+          <td>{{ producto.codigo }}</td>
+          <td>{{ producto.nombre }}</td>
+          <td><a href="{% url 'inventario:editar-producto' pk=producto.id %}" class="blue item" data-vivaldi-spatnav-clickable="1">Editar</a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% endif %}
+
+
+
+  </div>
+{% endblock %}

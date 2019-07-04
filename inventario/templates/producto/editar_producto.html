@@ -1,0 +1,7 @@
+<form class="ui form" method="POST">
+    <div class="field">
+      {% csrf_token %}
+      {{ form.as_p }}
+    </div>
+    <button class="ui button" type="submit">Guardar</button>
+  </form>
